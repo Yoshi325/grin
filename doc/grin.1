@@ -1,0 +1,135 @@
+.TH GRIN 1 "2026-02-14" "grin" "User Commands"
+.SH NAME
+grin \- make INI files greppable
+.SH SYNOPSIS
+.B grin
+.RI [ OPTIONS ]
+.RI [ FILE | \- ]
+.SH DESCRIPTION
+.B grin
+transforms INI files into discrete assignments, making them easy to explore
+and filter with standard Unix tools like
+.BR grep (1),
+.BR sed (1),
+and
+.BR diff (1).
+.PP
+Each INI key becomes a dot-separated path rooted at
+.BR ini ,
+with string values quoted and lines terminated by semicolons.
+Section headers produce empty-object assignments
+.RI ( ini.section " = {};" )
+so the full structure is preserved.
+.PP
+When invoked with
+.B \-\-ungrin
+(or as
+.BR ungrin ),
+the process is reversed: assignment lines are parsed back into INI format.
+.PP
+If no
+.I FILE
+is given, or if
+.I FILE
+is
+.BR \- ,
+.B grin
+reads from standard input.
+.SH OPTIONS
+.TP
+.BR \-u ", " \-\-ungrin
+Reverse the operation: turn grin assignments back into INI format.
+.TP
+.BR \-v ", " \-\-values
+Print just the values of provided assignments, one per line, without
+paths or quoting.
+.TP
+.BR \-c ", " \-\-colorize
+Colorize output. This is the default when output is a terminal.
+.TP
+.BR \-m ", " \-\-monochrome
+Monochrome output. Disables colorization.
+.TP
+.B \-\-no\-sort
+Don\(aqt sort output. Preserves the original order of the INI file,
+which can be faster for large files.
+.TP
+.B \-\-version
+Print version information and exit.
+.SH EXAMPLES
+Transform an INI file into greppable assignments:
+.PP
+.RS
+.nf
+$ grin config.ini
+ini = {};
+ini.database = {};
+ini.database.host = "localhost";
+ini.database.port = "5432";
+.fi
+.RE
+.PP
+Filter for specific keys using grep:
+.PP
+.RS
+.nf
+$ grin config.ini | grep host
+ini.database.host = "localhost";
+.fi
+.RE
+.PP
+Reconstruct a filtered INI file:
+.PP
+.RS
+.nf
+$ grin config.ini | grep pool | grin \-\-ungrin
+[database.pool]
+max = 10
+.fi
+.RE
+.PP
+Read from standard input:
+.PP
+.RS
+.nf
+$ cat config.ini | grin
+.fi
+.RE
+.PP
+Extract just the values:
+.PP
+.RS
+.nf
+$ grin \-v config.ini
+localhost
+5432
+.fi
+.RE
+.SH EXIT STATUS
+.TP
+.B 0
+Success.
+.TP
+.B 1
+Failed to open the specified file.
+.TP
+.B 2
+Failed to read input.
+.TP
+.B 3
+Failed to form statements from INI input.
+.TP
+.B 5
+Failed to parse assignment statements (during ungrin).
+.SH SEE ALSO
+.BR gron (1),
+.BR grep (1),
+.BR sed (1),
+.BR diff (1),
+.BR ini (5)
+.SH AUTHOR
+Charles Y. (Yoshi325)
+.SH LICENSE
+MIT License. See the LICENSE file in the source distribution.
+.SH BUGS
+Report bugs at: https://github.com/Yoshi325/grin/issues

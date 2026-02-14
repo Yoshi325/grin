@@ -27,6 +27,10 @@ archives:
       - goos: windows
         formats:
           - zip
+    files:
+      - src: LICENSE
+      - src: README.md
+      - src: doc/*
 
 checksum:
   name_template: 'checksums.txt'
@@ -49,8 +53,25 @@ brews:
     license: "MIT"
     install: |
       bin.install "grin"
+      man1.install "doc/grin.1"
     test: |
       assert_match "grin version", shell_output("#{bin}/grin --version")
+
+nfpms:
+  - id: packages
+    package_name: grin
+    file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    vendor: Yoshi325
+    homepage: "https://github.com/Yoshi325/grin"
+    maintainer: "Charles Y."
+    description: "Make INI files greppable"
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    contents:
+      - src: ./doc/grin.1
+        dst: /usr/share/man/man1/grin.1
 
 source:
   enabled: true
