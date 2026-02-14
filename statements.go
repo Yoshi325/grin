@@ -1,9 +1,6 @@
 package main
 
-import (
-	"sort"
-	"strings"
-)
+import "strings"
 
 // statement is an ordered list of tokens representing one grin assignment line.
 // e.g. ini.section.key = "value";
@@ -110,10 +107,3 @@ func statementToColorString(s statement) string {
 
 // statementconv is a function type for converting statements to strings.
 type statementconv func(statement) string
-
-// sortStatements sorts a slice of statements if sorting is enabled.
-func sortStatements(ss statements, noSort bool) {
-	if !noSort {
-		sort.Sort(ss)
-	}
-}
