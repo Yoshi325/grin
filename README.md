@@ -51,11 +51,21 @@ max = 10
 
 ## Installation
 
-Download a binary from the [latest release](https://github.com/Yoshi325/grin/releases/latest), or install with Go:
+### Homebrew (macOS/Linux)
+
+```
+brew install Yoshi325/tap/grin
+```
+
+### Go
 
 ```
 go install github.com/Yoshi325/grin@latest
 ```
+
+### Binary
+
+Download a binary from the [latest release](https://github.com/Yoshi325/grin/releases/latest).
 
 ## Options
 
@@ -67,6 +77,10 @@ go install github.com/Yoshi325/grin@latest
     --no-sort    Don't sort output (faster)
     --version    Print version information
 ```
+
+## Help grin get into Homebrew core
+
+If you find grin useful, please [star this repository](https://github.com/Yoshi325/grin)! Once we reach 75+ stars, we can submit grin to Homebrew core so anyone can install with just `brew install grin`.
 
 ## License
 
