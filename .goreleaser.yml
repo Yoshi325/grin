@@ -47,10 +47,8 @@ homebrew_casks:
     homepage: "https://github.com/Yoshi325/grin"
     description: "Make INI files greppable"
     license: "MIT"
-    install: |
-      bin.install "grin"
-    test: |
-      assert_match "grin version", shell_output("#{bin}/grin --version")
+    binaries:
+      - grin
 
 source:
   enabled: true
