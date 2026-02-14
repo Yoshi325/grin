@@ -102,7 +102,7 @@ func main() {
 		if err != nil {
 			fatal(exitOpenFile, err)
 		}
-		defer f.Close()
+		defer f.Close() //nolint:errcheck // best-effort close on read-only file
 		rawInput = f
 	}
 
@@ -152,7 +152,9 @@ func grinAction(r io.Reader, w io.Writer, opts int) (int, error) {
 	}
 
 	for _, s := range ss {
-		fmt.Fprintln(w, conv(s))
+		if _, err := fmt.Fprintln(w, conv(s)); err != nil {
+			return exitReadInput, err
+		}
 	}
 
 	return exitOK, nil
@@ -181,7 +183,9 @@ func grinValuesAction(r io.Reader, w io.Writer, opts int) (int, error) {
 	for _, s := range ss {
 		for _, t := range s {
 			if t.typ == typString {
-				fmt.Fprintln(w, unquoteString(t.text))
+				if _, err := fmt.Fprintln(w, unquoteString(t.text)); err != nil {
+					return exitReadInput, err
+				}
 			}
 		}
 	}

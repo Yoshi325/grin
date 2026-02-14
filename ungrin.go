@@ -96,7 +96,9 @@ func ungrinFromStatements(ss statements, w io.Writer) error {
 
 	// Global keys first (no section header)
 	for _, kv := range globalKeys {
-		fmt.Fprintf(w, "%s = %s\n", kv.key, kv.value)
+		if _, err := fmt.Fprintf(w, "%s = %s\n", kv.key, kv.value); err != nil {
+			return err
+		}
 		first = false
 	}
 
@@ -111,13 +113,19 @@ func ungrinFromStatements(ss statements, w io.Writer) error {
 		}
 
 		if !first {
-			fmt.Fprintln(w)
+			if _, err := fmt.Fprintln(w); err != nil {
+				return err
+			}
 		}
 		first = false
 
-		fmt.Fprintf(w, "[%s]\n", secName)
+		if _, err := fmt.Fprintf(w, "[%s]\n", secName); err != nil {
+			return err
+		}
 		for _, kv := range kvs {
-			fmt.Fprintf(w, "%s = %s\n", kv.key, kv.value)
+			if _, err := fmt.Fprintf(w, "%s = %s\n", kv.key, kv.value); err != nil {
+				return err
+			}
 		}
 	}
 

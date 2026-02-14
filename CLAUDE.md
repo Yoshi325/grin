@@ -11,7 +11,18 @@ go test -v ./...                      # Run all tests (verbose)
 go test -run TestGrinFixtures ./...   # Run a single test by name
 go test -race ./...                   # Run tests with race detector
 go test -coverprofile=c.out ./...     # Run tests with coverage
+golangci-lint run ./...               # Run linter
 ```
+
+## Pre-commit Hooks
+
+Git hooks live in `.githooks/` (tracked in repo). New clones must configure:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The pre-commit hook runs `go vet`, `go test -race`, and `golangci-lint` before each commit.
 
 ## Architecture
 

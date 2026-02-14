@@ -233,7 +233,7 @@ func TestGrinFileInput(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to open %s: %v", iniPath, err)
 	}
-	defer f.Close()
+	defer f.Close() //nolint:errcheck // test cleanup
 
 	wantData, err := os.ReadFile(grinPath)
 	if err != nil {
