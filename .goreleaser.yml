@@ -19,12 +19,14 @@ builds:
       - -s -w -X main.grinVersion={{.Version}}
 
 archives:
-  - format: tar.gz
+  - formats:
+      - tar.gz
     name_template: >-
       {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
 
 checksum:
   name_template: 'checksums.txt'
@@ -37,7 +39,7 @@ changelog:
       - '^test:'
       - '^ci:'
 
-brews:
+homebrew_casks:
   - repository:
       owner: Yoshi325
       name: homebrew-tap
