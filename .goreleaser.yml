@@ -39,7 +39,7 @@ changelog:
       - '^test:'
       - '^ci:'
 
-homebrew_casks:
+brews:
   - repository:
       owner: Yoshi325
       name: homebrew-tap
@@ -47,8 +47,10 @@ homebrew_casks:
     homepage: "https://github.com/Yoshi325/grin"
     description: "Make INI files greppable"
     license: "MIT"
-    binaries:
-      - grin
+    install: |
+      bin.install "grin"
+    test: |
+      assert_match "grin version", shell_output("#{bin}/grin --version")
 
 source:
   enabled: true
