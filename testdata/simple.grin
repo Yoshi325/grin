@@ -1,0 +1,7 @@
+ini = {};
+ini.database = {};
+ini.database.port = "143";
+ini.database.server = "192.168.1.1";
+ini.owner = {};
+ini.owner.name = "John Doe";
+ini.owner.organization = "Acme Inc";

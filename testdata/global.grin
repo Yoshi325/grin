@@ -1,0 +1,5 @@
+ini = {};
+ini.name = "grin";
+ini.settings = {};
+ini.settings.debug = "false";
+ini.version = "1.0";

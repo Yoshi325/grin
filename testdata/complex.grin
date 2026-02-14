@@ -1,0 +1,16 @@
+ini = {};
+ini.app-name = "SuperApp";
+ini.cache = {};
+ini.cache.enabled = "true";
+ini.cache.ttl = "3600";
+ini.database = {};
+ini.database.host = "db.example.com";
+ini.database.name = "mydb";
+ini.database.pool = {};
+ini.database.pool.max = "20";
+ini.database.pool.min = "5";
+ini.database.port = "5432";
+ini.logging = {};
+ini.logging.file = "/var/log/app.log";
+ini.logging.level = "info";
+ini.version = "2.1";

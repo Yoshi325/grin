@@ -1,0 +1,8 @@
+ini = {};
+ini.server = {};
+ini.server.host = "example.com";
+ini.server.ssl = {};
+ini.server.ssl.cert = "/etc/ssl/cert.pem";
+ini.server.ssl.enabled = "true";
+ini.server.ssl.options = {};
+ini.server.ssl.options.min-version = "TLSv1.2";

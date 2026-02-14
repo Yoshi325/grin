@@ -1,0 +1,4 @@
+ini = {};
+ini.app = {};
+ini.app.debug = "false";
+ini.app.name = "MyApp";

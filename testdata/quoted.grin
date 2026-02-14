@@ -1,0 +1,5 @@
+ini = {};
+ini.paths = {};
+ini.paths.home = "/usr/local";
+ini.paths.plain = "/var/log";
+ini.paths.temp = "/tmp/app";
