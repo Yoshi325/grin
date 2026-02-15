@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Yoshi325/grin.svg)](https://pkg.go.dev/github.com/Yoshi325/grin)
 [![Release](https://img.shields.io/github/v/release/Yoshi325/grin)](https://github.com/Yoshi325/grin/releases/latest)
+[![Website](https://img.shields.io/badge/website-yoshi325.github.io%2Fgrin-blue)](https://yoshi325.github.io/grin/)
 
 Make INI files greppable.
 

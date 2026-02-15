@@ -48,7 +48,7 @@ brews:
       owner: Yoshi325
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    homepage: "https://github.com/Yoshi325/grin"
+    homepage: "https://yoshi325.github.io/grin/"
     description: "Make INI files greppable"
     license: "MIT"
     install: |
@@ -62,7 +62,7 @@ nfpms:
     package_name: grin
     file_name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     vendor: Yoshi325
-    homepage: "https://github.com/Yoshi325/grin"
+    homepage: "https://yoshi325.github.io/grin/"
     maintainer: "Charles Y."
     description: "Make INI files greppable"
     license: MIT
