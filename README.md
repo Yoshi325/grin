@@ -16,38 +16,95 @@ Inspired by [gron](https://github.com/tomnomnom/gron).
 
 ## Usage
 
+![Basic conversion](docs/demos/basic.gif)
+
+<details>
+<summary>Text version (click to expand)</summary>
+
 ```
-$ cat config.ini
+$ cat testdata/complex.ini
+; Complex configuration example
+app-name = SuperApp
+version = 2.1
+
 [database]
-host = localhost
+host = db.example.com
 port = 5432
+name = mydb
 
 [database.pool]
-max = 10
+min = 5
+max = 20
 
-$ grin config.ini
+[cache]
+enabled = true
+ttl = 3600
+
+[logging]
+level = info
+file = /var/log/app.log
+
+$ grin -m testdata/complex.ini
 ini = {};
+ini.app-name = "SuperApp";
+ini.cache = {};
+ini.cache.enabled = "true";
+ini.cache.ttl = "3600";
 ini.database = {};
-ini.database.host = "localhost";
+ini.database.host = "db.example.com";
+ini.database.name = "mydb";
 ini.database.pool = {};
-ini.database.pool.max = "10";
+ini.database.pool.max = "20";
+ini.database.pool.min = "5";
 ini.database.port = "5432";
+ini.logging = {};
+ini.logging.file = "/var/log/app.log";
+ini.logging.level = "info";
+ini.version = "2.1";
 ```
+
+</details>
 
 Now you can use standard tools to find what you need:
 
+![Grep filtering](docs/demos/filtering.gif)
+
+<details>
+<summary>Text version (click to expand)</summary>
+
 ```
-$ grin config.ini | grep host
-ini.database.host = "localhost";
+$ grin -m testdata/complex.ini | grep database
+ini.database = {};
+ini.database.host = "db.example.com";
+ini.database.name = "mydb";
+ini.database.pool = {};
+ini.database.pool.max = "20";
+ini.database.pool.min = "5";
+ini.database.port = "5432";
 ```
+
+</details>
 
 And reconstruct a filtered INI file with `--ungrin`:
 
+![Ungrin round-trip](docs/demos/ungrin.gif)
+
+<details>
+<summary>Text version (click to expand)</summary>
+
 ```
-$ grin config.ini | grep pool | grin --ungrin
+$ grin -m testdata/complex.ini | grep database | grin -u
+[database]
+host = db.example.com
+name = mydb
+port = 5432
+
 [database.pool]
-max = 10
+max = 20
+min = 5
 ```
+
+</details>
 
 ## Installation
 
