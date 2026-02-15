@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }} — Make INI files greppable{% endblock %}
+
+{% block content %}
+<div class="mt-12 md:mt-16">
+  <header class="text-center py-8">
+    <h1 class="text-5xl font-bold mb-4">grin</h1>
+    <p class="text-xl text-zinc-600 dark:text-zinc-400 mb-6">Make INI files greppable.</p>
+    <p class="text-zinc-600 dark:text-zinc-400 mb-8">
+      grin transforms INI files into discrete assignments, making them easy to explore
+      and filter with standard Unix tools like <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">grep</code>,
+      <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">sed</code>, and
+      <code class="bg-zinc-200 dark:bg-zinc-700 px-1 rounded">diff</code>.
+      Inspired by <a href="https://github.com/tomnomnom/gron" class="underline">gron</a>.
+    </p>
+    <a href="https://github.com/Yoshi325/grin"
+       class="inline-block bg-zinc-800 dark:bg-zinc-200 text-white dark:text-zinc-800 px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+      View on GitHub
+    </a>
+  </header>
+
+  <section class="py-8">
+    <h2 class="text-2xl font-bold mb-4">Convert INI to greppable assignments</h2>
+    <img src="https://raw.githubusercontent.com/Yoshi325/grin/main/docs/demos/basic.gif"
+         alt="grin basic conversion demo"
+         class="rounded-lg shadow-lg mb-8 w-full" loading="lazy">
+  </section>
+
+  <section class="py-8">
+    <h2 class="text-2xl font-bold mb-4">Filter with standard Unix tools</h2>
+    <img src="https://raw.githubusercontent.com/Yoshi325/grin/main/docs/demos/filtering.gif"
+         alt="grin grep filtering demo"
+         class="rounded-lg shadow-lg mb-8 w-full" loading="lazy">
+  </section>
+
+  <section class="py-8">
+    <h2 class="text-2xl font-bold mb-4">Reconstruct filtered INI files</h2>
+    <img src="https://raw.githubusercontent.com/Yoshi325/grin/main/docs/demos/ungrin.gif"
+         alt="grin ungrin round-trip demo"
+         class="rounded-lg shadow-lg mb-8 w-full" loading="lazy">
+  </section>
+
+  <section class="py-8">
+    <h2 class="text-2xl font-bold mb-4">Install</h2>
+    <div class="space-y-4">
+      <div>
+        <h3 class="font-semibold mb-2">Homebrew (macOS/Linux)</h3>
+        <pre class="bg-zinc-200 dark:bg-zinc-800 rounded-lg p-4 overflow-x-auto"><code>brew install Yoshi325/tap/grin</code></pre>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-2">Go</h3>
+        <pre class="bg-zinc-200 dark:bg-zinc-800 rounded-lg p-4 overflow-x-auto"><code>go install github.com/Yoshi325/grin@latest</code></pre>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-2">Binary</h3>
+        <p>Download from the <a href="https://github.com/Yoshi325/grin/releases/latest" class="underline">latest release</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
