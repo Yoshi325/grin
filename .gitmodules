@@ -1,0 +1,6 @@
+[submodule "site/themes/papyrus"]
+	path = site/themes/papyrus
+	url = https://github.com/pelican-themes/papyrus.git
+[submodule "site/pelican-plugins/pelican-toc"]
+	path = site/pelican-plugins/pelican-toc
+	url = https://github.com/ingwinlu/pelican-toc.git
