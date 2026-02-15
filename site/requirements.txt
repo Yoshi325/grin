@@ -1,0 +1,5 @@
+pelican[markdown]>=4.9
+pelican-search
+pelican-neighbors
+pelican-readtime
+beautifulsoup4
