@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="Make INI files greppable">
+    <title>grin | Man Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+    <link rel="stylesheet" type="text/css" href="https://yoshi325.github.io/grin/theme/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://yoshi325.github.io/grin/theme/css/pygment.css" />
+    <link rel="shortcut icon" href="https://yoshi325.github.io/grin/favicon.ico" type="image/x-icon">
+    <link
+        href="https://yoshi325.github.io/grin/feeds/all.atom.xml"
+        type="application/atom+xml" rel="alternate" title="grin Atom Feed" />
+</head>
+
+<body class="min-h-screen flex flex-col max-w-7xl lg:max-w-none text-zinc-800 bg-neutral-100
+    dark:bg-neutral-900 dark:text-zinc-300 container mx-auto justify-center md:px-3 ">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+    <nav class="sm:flex sm:justify-between xl:ml-32 pl-4 items-center">
+        <div class="flex pt-4">
+            <h1 class="font-semibold text-2xl"><a href="https://yoshi325.github.io/grin/">grin</a></h1>
+            <button id="theme-toggle" type="button" aria-label="Light|Dark"
+                class="text-zinc-700 dark:text-zinc-400 rounded-full focus:outline-none text-sm ml-2 p-1">
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="flex flex-wrap lg:mr-24 md:pt-0">
+            <li class="mr-4 pt-6"><a  href="https://yoshi325.github.io/grin/examples/">Examples</a></li>
+            <li class="mr-4 pt-6"><a  class="border-b-2 border-zinc-800 dark:border-zinc-300"
+ href="https://yoshi325.github.io/grin/manpage/">Man Page</a></li>
+            <li class="mr-4 pt-6"><a href="https://github.com/Yoshi325/grin" class="inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a></li>
+        </ul>
+    </nav>
+    <div class="flex-grow md:max-w-screen-md md:mx-auto md:w-3/4 px-4">
+        <nav class="text-zinc-800 dark:text-zinc-300 mt-12 pb-3 md:mt-16" aria-label="Breadcrumb">
+            <ul class="p-0 inline-flex">
+                <li class="flex items-center">
+                    <a href="https://yoshi325.github.io/grin/" class="text-zinc-800 dark:text-zinc-300 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                            </path>
+                        </svg>
+                        Home
+                    </a>
+                    <svg class="fill-current w-3 h-3 mr-2 ml-1" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 320 512">
+                        <path
+                            d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+                    </svg>
+                </li>
+                <li class="border-b-2 border-zinc-800 dark:border-zinc-300">
+                    Man Page
+                </li>
+            </ul>
+        </nav>
+
+<main class="text-zinc-800 dark:text-zinc-300">
+    <div class="max-w-7xl container mx-auto my-2 text-zinc-800 dark:text-zinc-300  
+            prose lg:max-w-none prose-headings:text-zinc-800 prose-headings:dark:text-zinc-300 
+            prose-h1:text-3xl lg:prose-h1:text-3xl prose-headings:font-semibold 
+            prose-pre:bg-zinc-200 prose-pre:text-zinc-800
+            dark:prose-pre:bg-zinc-800 dark:prose-pre:text-zinc-200
+            prose-blockquote:text-zinc-800
+            dark:prose-blockquote:text-zinc-200
+            prose-a:text-slate-600 prose-a:font-normal
+            dark:prose-a:text-slate-400
+            dark:prose-strong:text-zinc-200 
+            dark:prose-code:text-zinc-200
+            dark:prose-code:bg-zinc-800
+            prose-code:bg-zinc-200
+            prose-code:font-light
+            prose-img:rounded-md
+            sm:text-left md:text-justify
+            ">
+        
+        <h2 id="name">NAME</h2>
+<p>grin &mdash; make INI files greppable</p>
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>grin</strong> [<em>OPTIONS</em>] [<em>FILE</em> | <strong>-</strong>]</p>
+<h2 id="description">DESCRIPTION</h2>
+<p><strong>grin</strong> transforms INI files into discrete assignments, making them
+easy to explore and filter with standard Unix tools like <strong>grep</strong>(1),
+<strong>sed</strong>(1), and <strong>diff</strong>(1).</p>
+<p>Each INI key becomes a dot-separated path rooted at <strong>ini</strong>, with
+string values quoted and lines terminated by semicolons. Section
+headers produce empty-object assignments (<code>ini.section = {};</code>) so the
+full structure is preserved.</p>
+<p>When invoked with <strong>--ungrin</strong> (or as <strong>ungrin</strong>), the process is
+reversed: assignment lines are parsed back into INI format.</p>
+<p>If no <em>FILE</em> is given, or if <em>FILE</em> is <strong>-</strong>, <strong>grin</strong> reads from
+standard input.</p>
+<h2 id="options">OPTIONS</h2>
+<dl>
+<dt><strong>-u</strong>, <strong>--ungrin</strong></dt>
+<dd>Reverse the operation: turn grin assignments back into INI format.</dd>
+<dt><strong>-v</strong>, <strong>--values</strong></dt>
+<dd>Print just the values of provided assignments, one per line, without paths or quoting.</dd>
+<dt><strong>-c</strong>, <strong>--colorize</strong></dt>
+<dd>Colorize output. This is the default when output is a terminal.</dd>
+<dt><strong>-m</strong>, <strong>--monochrome</strong></dt>
+<dd>Monochrome output. Disables colorization.</dd>
+<dt><strong>--no-sort</strong></dt>
+<dd>Don't sort output. Preserves the original order of the INI file, which can be faster for large files.</dd>
+<dt><strong>--version</strong></dt>
+<dd>Print version information and exit.</dd>
+</dl>
+<h2 id="examples">EXAMPLES</h2>
+<p>Transform an INI file into greppable assignments:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>config.ini
+<span class="nv">ini</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database.host<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">;</span>
+ini.database.port<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5432"</span><span class="p">;</span>
+</code></pre></div>
+<p>Filter for specific keys using grep:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>host
+ini.database.host<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">;</span>
+</code></pre></div>
+<p>Reconstruct a filtered INI file:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>pool<span class="w"> </span><span class="p">|</span><span class="w"> </span>grin<span class="w"> </span>--ungrin
+<span class="o">[</span>database.pool<span class="o">]</span>
+<span class="nv">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>
+</code></pre></div>
+<p>Read from standard input:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grin
+</code></pre></div>
+<p>Extract just the values:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>-v<span class="w"> </span>config.ini
+localhost
+<span class="m">5432</span>
+</code></pre></div>
+<h2 id="exit-status">EXIT STATUS</h2>
+<dl>
+<dt><strong>0</strong></dt>
+<dd>Success.</dd>
+<dt><strong>1</strong></dt>
+<dd>Failed to open the specified file.</dd>
+<dt><strong>2</strong></dt>
+<dd>Failed to read input.</dd>
+<dt><strong>3</strong></dt>
+<dd>Failed to form statements from INI input.</dd>
+<dt><strong>5</strong></dt>
+<dd>Failed to parse assignment statements (during ungrin).</dd>
+</dl>
+<h2 id="see-also">SEE ALSO</h2>
+<p><strong>gron</strong>(1), <strong>grep</strong>(1), <strong>sed</strong>(1), <strong>diff</strong>(1), <strong>ini</strong>(5)</p>
+<h2 id="author">AUTHOR</h2>
+<p>Charles Y. (Yoshi325)</p>
+<h2 id="license">LICENSE</h2>
+<p>MIT License. See the LICENSE file in the source distribution.</p>
+<h2 id="bugs">BUGS</h2>
+<p>Report bugs at: <a href="https://github.com/Yoshi325/grin/issues">github.com/Yoshi325/grin/issues</a></p>
+        <!-- <div class="aspect-w-16 aspect-h-9 mx-auto"></div> CSS placeholder -->
+    </div>
+    <div>
+    </div>
+</main>
+
+    </div>
+    <footer class="flex w-full text-xs justify-center mt-10 mb-6 text-zinc-600 dark:text-zinc-400">
+        <div class="px-4">
+            Powered by
+            <a class="underline" href="https://getpelican.com/">Pelican</a>&nbsp;&amp;
+            <a class="underline" href="https://github.com/aleylara/Papyrus">Papyrus</a>
+        </div>
+    </footer>
+
+    <script>
+        let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+        let themeToggleBtn = document.getElementById('theme-toggle');
+        themeToggleBtn.addEventListener('click', function () {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

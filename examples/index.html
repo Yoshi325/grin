@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="Make INI files greppable">
+    <title>grin | Examples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+    <link rel="stylesheet" type="text/css" href="https://yoshi325.github.io/grin/theme/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://yoshi325.github.io/grin/theme/css/pygment.css" />
+    <link rel="shortcut icon" href="https://yoshi325.github.io/grin/favicon.ico" type="image/x-icon">
+    <link
+        href="https://yoshi325.github.io/grin/feeds/all.atom.xml"
+        type="application/atom+xml" rel="alternate" title="grin Atom Feed" />
+</head>
+
+<body class="min-h-screen flex flex-col max-w-7xl lg:max-w-none text-zinc-800 bg-neutral-100
+    dark:bg-neutral-900 dark:text-zinc-300 container mx-auto justify-center md:px-3 ">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+    <nav class="sm:flex sm:justify-between xl:ml-32 pl-4 items-center">
+        <div class="flex pt-4">
+            <h1 class="font-semibold text-2xl"><a href="https://yoshi325.github.io/grin/">grin</a></h1>
+            <button id="theme-toggle" type="button" aria-label="Light|Dark"
+                class="text-zinc-700 dark:text-zinc-400 rounded-full focus:outline-none text-sm ml-2 p-1">
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="flex flex-wrap lg:mr-24 md:pt-0">
+            <li class="mr-4 pt-6"><a  class="border-b-2 border-zinc-800 dark:border-zinc-300"
+ href="https://yoshi325.github.io/grin/examples/">Examples</a></li>
+            <li class="mr-4 pt-6"><a  href="https://yoshi325.github.io/grin/manpage/">Man Page</a></li>
+            <li class="mr-4 pt-6"><a href="https://github.com/Yoshi325/grin" class="inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a></li>
+        </ul>
+    </nav>
+    <div class="flex-grow md:max-w-screen-md md:mx-auto md:w-3/4 px-4">
+        <nav class="text-zinc-800 dark:text-zinc-300 mt-12 pb-3 md:mt-16" aria-label="Breadcrumb">
+            <ul class="p-0 inline-flex">
+                <li class="flex items-center">
+                    <a href="https://yoshi325.github.io/grin/" class="text-zinc-800 dark:text-zinc-300 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                            </path>
+                        </svg>
+                        Home
+                    </a>
+                    <svg class="fill-current w-3 h-3 mr-2 ml-1" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 320 512">
+                        <path
+                            d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+                    </svg>
+                </li>
+                <li class="border-b-2 border-zinc-800 dark:border-zinc-300">
+                    Examples
+                </li>
+            </ul>
+        </nav>
+
+<main class="text-zinc-800 dark:text-zinc-300">
+    <div class="max-w-7xl container mx-auto my-2 text-zinc-800 dark:text-zinc-300  
+            prose lg:max-w-none prose-headings:text-zinc-800 prose-headings:dark:text-zinc-300 
+            prose-h1:text-3xl lg:prose-h1:text-3xl prose-headings:font-semibold 
+            prose-pre:bg-zinc-200 prose-pre:text-zinc-800
+            dark:prose-pre:bg-zinc-800 dark:prose-pre:text-zinc-200
+            prose-blockquote:text-zinc-800
+            dark:prose-blockquote:text-zinc-200
+            prose-a:text-slate-600 prose-a:font-normal
+            dark:prose-a:text-slate-400
+            dark:prose-strong:text-zinc-200 
+            dark:prose-code:text-zinc-200
+            dark:prose-code:bg-zinc-800
+            prose-code:bg-zinc-200
+            prose-code:font-light
+            prose-img:rounded-md
+            sm:text-left md:text-justify
+            ">
+        
+        <h2 id="basic-conversion">Basic Conversion</h2>
+<p>Transform an INI file into greppable assignments:</p>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="n">config</span><span class="p">.</span><span class="n">ini</span>
+<span class="p">;</span><span class="w"> </span><span class="n">Complex</span><span class="w"> </span><span class="n">configuration</span><span class="w"> </span><span class="n">example</span>
+<span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SuperApp</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.1</span>
+
+<span class="o">[</span><span class="n">database</span><span class="o">]</span>
+<span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+<span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5432</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mydb</span>
+
+<span class="o">[</span><span class="n">database.pool</span><span class="o">]</span>
+<span class="nf">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
+<span class="nf">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
+
+<span class="o">[</span><span class="n">cache</span><span class="o">]</span>
+<span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="n">ttl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3600</span>
+
+<span class="o">[</span><span class="n">logging</span><span class="o">]</span>
+<span class="k">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">info</span>
+<span class="k">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">app</span><span class="p">.</span><span class="nf">log</span>
+
+<span class="err">$</span><span class="w"> </span><span class="n">grin</span><span class="w"> </span><span class="n">config</span><span class="p">.</span><span class="n">ini</span>
+<span class="n">ini</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"SuperApp"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">cache</span><span class="p">.</span><span class="n">enabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"true"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">cache</span><span class="p">.</span><span class="n">ttl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"3600"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"db.example.com"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"mydb"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">pool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">pool</span><span class="p">.</span><span class="nf">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"20"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">pool</span><span class="p">.</span><span class="nf">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"5"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="k">database</span><span class="p">.</span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"5432"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">logging</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">logging</span><span class="p">.</span><span class="k">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"/var/log/app.log"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">logging</span><span class="p">.</span><span class="k">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"info"</span><span class="p">;</span>
+<span class="n">ini</span><span class="p">.</span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"2.1"</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="filtering-with-grep">Filtering with grep</h2>
+<p>Find all database-related settings:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>database
+ini.database<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database.host<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"db.example.com"</span><span class="p">;</span>
+ini.database.name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mydb"</span><span class="p">;</span>
+ini.database.pool<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database.pool.max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"20"</span><span class="p">;</span>
+ini.database.pool.min<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5"</span><span class="p">;</span>
+ini.database.port<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5432"</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="reconstructing-filtered-ini">Reconstructing Filtered INI</h2>
+<p>Pipe filtered assignments through <code>grin -u</code> to get valid INI back:</p>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">grin</span><span class="w"> </span><span class="n">config</span><span class="p">.</span><span class="n">ini</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grep</span><span class="w"> </span><span class="k">database</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">grin</span><span class="w"> </span><span class="o">-</span><span class="n">u</span>
+<span class="o">[</span><span class="n">database</span><span class="o">]</span>
+<span class="k">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mydb</span>
+<span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5432</span>
+
+<span class="o">[</span><span class="n">database.pool</span><span class="o">]</span>
+<span class="nf">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
+<span class="nf">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<h2 id="extracting-values-only">Extracting Values Only</h2>
+<p>Use <code>--values</code> to print just the values without paths or quoting:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>-v<span class="w"> </span>config.ini
+SuperApp
+<span class="m">2</span>.1
+db.example.com
+<span class="m">5432</span>
+mydb
+<span class="m">5</span>
+<span class="m">20</span>
+<span class="nb">true</span>
+<span class="m">3600</span>
+info
+/var/log/app.log
+</code></pre></div>
+<h2 id="reading-from-stdin">Reading from stdin</h2>
+<p>Pipe INI content directly:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grin
+</code></pre></div>
+<p>Or from another command:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>https://example.com/config.ini<span class="w"> </span><span class="p">|</span><span class="w"> </span>grin<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>database
+</code></pre></div>
+<h2 id="unsorted-output">Unsorted Output</h2>
+<p>Use <code>--no-sort</code> to preserve the original INI order (faster for large files):</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>grin<span class="w"> </span>--no-sort<span class="w"> </span>config.ini
+<span class="nv">ini</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.app-name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"SuperApp"</span><span class="p">;</span>
+ini.version<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2.1"</span><span class="p">;</span>
+ini.database<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database.host<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"db.example.com"</span><span class="p">;</span>
+ini.database.port<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5432"</span><span class="p">;</span>
+ini.database.name<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mydb"</span><span class="p">;</span>
+ini.database.pool<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.database.pool.min<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"5"</span><span class="p">;</span>
+ini.database.pool.max<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"20"</span><span class="p">;</span>
+ini.cache<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.cache.enabled<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"true"</span><span class="p">;</span>
+ini.cache.ttl<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"3600"</span><span class="p">;</span>
+ini.logging<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{}</span><span class="p">;</span>
+ini.logging.level<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"info"</span><span class="p">;</span>
+ini.logging.file<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"/var/log/app.log"</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="comparing-config-files">Comparing Config Files</h2>
+<p>Use grin with <code>diff</code> to compare two INI files structurally:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>diff<span class="w"> </span>&lt;<span class="o">(</span>grin<span class="w"> </span>config-prod.ini<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>grin<span class="w"> </span>config-staging.ini<span class="o">)</span>
+</code></pre></div>
+        <!-- <div class="aspect-w-16 aspect-h-9 mx-auto"></div> CSS placeholder -->
+    </div>
+    <div>
+    </div>
+</main>
+
+    </div>
+    <footer class="flex w-full text-xs justify-center mt-10 mb-6 text-zinc-600 dark:text-zinc-400">
+        <div class="px-4">
+            Powered by
+            <a class="underline" href="https://getpelican.com/">Pelican</a>&nbsp;&amp;
+            <a class="underline" href="https://github.com/aleylara/Papyrus">Papyrus</a>
+        </div>
+    </footer>
+
+    <script>
+        let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        let themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+        let themeToggleBtn = document.getElementById('theme-toggle');
+        themeToggleBtn.addEventListener('click', function () {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
