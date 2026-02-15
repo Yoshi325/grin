@@ -10,12 +10,8 @@ DEFAULT_LANG = "en"
 THEME = "themes/papyrus"
 
 # Plugins
-PLUGINS = ["readtime", "search", "neighbors", "pelican-toc"]
+PLUGINS = ["readtime", "neighbors", "pelican-toc"]
 PLUGIN_PATHS = ["pelican-plugins"]
-
-# Search
-SEARCH_MODE = "output"
-SEARCH_HTML_SELECTOR = "main"
 
 # Static paths
 STATIC_PATHS = ["images"]
@@ -25,7 +21,7 @@ PAGE_URL = "{slug}/"
 PAGE_SAVE_AS = "{slug}/index.html"
 
 # Disable blog features (this is a project site, not a blog)
-DIRECT_TEMPLATES = ["archives"]
+DIRECT_TEMPLATES = ["index"]
 ARTICLE_PATHS = []
 DISPLAY_PAGES_ON_MENU = True
 

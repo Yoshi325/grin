@@ -1,0 +1,11 @@
+[project]
+name = "grin-site"
+version = "0.1.0"
+description = "Project website for grin"
+requires-python = ">=3.10"
+dependencies = [
+    "pelican[markdown]>=4.9",
+    "pelican-neighbors",
+    "pelican-readtime",
+    "beautifulsoup4",
+]

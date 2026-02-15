@@ -25,19 +25,16 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
       - name: Install dependencies
         working-directory: site
-        run: pip install -r requirements.txt
-
-      - name: Install Stork (for search)
-        run: |
-          wget -qO stork https://files.stork-search.net/releases/v1.6.0/stork-amazon-linux
-          chmod +x stork
-          sudo mv stork /usr/local/bin/
+        run: uv sync
 
       - name: Build site
         working-directory: site
-        run: pelican content -s publishconf.py
+        run: uv run pelican content -s publishconf.py
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
