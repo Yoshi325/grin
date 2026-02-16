@@ -131,13 +131,6 @@ grin -m config.ini | Select-String "database" | grin -u
 brew install Yoshi325/tap/grin
 ```
 
-### Scoop (Windows)
-
-```powershell
-scoop bucket add yoshi325 https://github.com/Yoshi325/scoop-bucket
-scoop install grin
-```
-
 ### Go
 
 ```
