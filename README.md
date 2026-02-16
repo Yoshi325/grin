@@ -6,6 +6,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/Yoshi325/grin.svg)](https://pkg.go.dev/github.com/Yoshi325/grin)
 [![Release](https://img.shields.io/github/v/release/Yoshi325/grin)](https://github.com/Yoshi325/grin/releases/latest)
 [![Website](https://img.shields.io/badge/website-yoshi325.github.io%2Fgrin-blue)](https://yoshi325.github.io/grin/)
+[![Tiny Tool Town](https://img.shields.io/badge/%F0%9F%8F%98%EF%B8%8F_Tiny_Tool_Town-Resident-orange)](https://www.tinytooltown.com/)
 
 Make INI files greppable.
 
@@ -107,12 +108,34 @@ min = 5
 
 </details>
 
+### PowerShell
+
+grin works great with PowerShell's `Select-String` (the `grep` equivalent):
+
+```powershell
+# Filter INI sections
+grin -m config.ini | Select-String "database"
+
+# Multiple patterns
+grin -m config.ini | Select-String -Pattern @("database", "cache")
+
+# Round-trip with filtering
+grin -m config.ini | Select-String "database" | grin -u
+```
+
 ## Installation
 
 ### Homebrew (macOS/Linux)
 
 ```
 brew install Yoshi325/tap/grin
+```
+
+### Scoop (Windows)
+
+```powershell
+scoop bucket add yoshi325 https://github.com/Yoshi325/scoop-bucket
+scoop install grin
 ```
 
 ### Go
@@ -136,7 +159,9 @@ Download a binary from the [latest release](https://github.com/Yoshi325/grin/rel
     --version    Print version information
 ```
 
-## Help grin get into Homebrew core
+## Community
+
+> **🏘️ grin is a proud resident of [Tiny Tool Town](https://www.tinytooltown.com/)** — Scott Hanselman's neighborhood of free, fun & open source tiny tools.
 
 If you find grin useful, please [star this repository](https://github.com/Yoshi325/grin)! Once we reach 75+ stars, we can submit grin to Homebrew core so anyone can install with just `brew install grin`.
 

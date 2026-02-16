@@ -127,3 +127,40 @@ Use `--no-sort` to preserve the original INI order (faster for large files):
 Use grin with `diff` to compare two INI files structurally:
 
     $ diff <(grin config-prod.ini) <(grin config-staging.ini)
+
+## PowerShell Examples
+
+grin works great with PowerShell's `Select-String` (the `grep` equivalent):
+
+    PS> grin -m config.ini | Select-String "database"
+    ini.database = {};
+    ini.database.host = "db.example.com";
+    ini.database.name = "mydb";
+    ini.database.pool = {};
+    ini.database.pool.max = "20";
+    ini.database.pool.min = "5";
+    ini.database.port = "5432";
+
+Filter with multiple patterns:
+
+    PS> grin -m config.ini | Select-String -Pattern @("database", "cache")
+
+Round-trip with filtering:
+
+    PS> grin -m config.ini | Select-String "database" | grin -u
+    [database]
+    host = db.example.com
+    name = mydb
+    port = 5432
+
+    [database.pool]
+    max = 20
+    min = 5
+
+Show context around matches:
+
+    PS> grin -m config.ini | Select-String "database" -Context 2
+
+Compare config files in PowerShell:
+
+    PS> Compare-Object (grin config-prod.ini) (grin config-staging.ini)
