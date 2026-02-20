@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "==> Checking gofmt -s..."
+GOFMT_OUT=$(gofmt -s -l .)
+if [ -n "$GOFMT_OUT" ]; then
+    echo "    The following files are not gofmt -s formatted:"
+    echo "$GOFMT_OUT"
+    echo "    Run: gofmt -s -w ."
+    exit 1
+fi
+
 echo "==> Running go vet..."
 go vet ./...
 
