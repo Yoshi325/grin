@@ -22,7 +22,7 @@ Git hooks live in `.githooks/` (tracked in repo). New clones must configure:
 git config core.hooksPath .githooks
 ```
 
-The pre-commit hook runs `go vet`, `go test -race`, and `golangci-lint` before each commit.
+The pre-commit hook runs `gofmt -s`, `go vet`, `go test -race`, and `golangci-lint` before each commit.
 
 ## Architecture
 
