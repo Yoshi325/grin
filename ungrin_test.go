@@ -65,7 +65,7 @@ func TestExtractPathAndValue(t *testing.T) {
 		{`ini.section = {};`, []string{"section"}, "", true},       // section declaration
 		{`ini.key = "val";`, []string{"key"}, "val", false},        // global key
 		{`ini.s.key = "val";`, []string{"s", "key"}, "val", false}, // section key
-		{`ini.a.b.c = "d";`, []string{"a", "b", "c"}, "d", false}, // deep path
+		{`ini.a.b.c = "d";`, []string{"a", "b", "c"}, "d", false},  // deep path
 	}
 
 	for _, tt := range tests {

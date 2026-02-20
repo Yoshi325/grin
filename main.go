@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	exitOK             = 0
-	exitOpenFile       = 1
-	exitReadInput      = 2
-	exitFormStatements = 3
+	exitOK              = 0
+	exitOpenFile        = 1
+	exitReadInput       = 2
+	exitFormStatements  = 3
 	exitParseStatements = 5
 )
 
