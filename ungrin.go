@@ -9,6 +9,12 @@ import (
 	"unicode/utf8"
 )
 
+// ungrinKVPair holds a key-value pair for INI output.
+type ungrinKVPair struct {
+	key   string
+	value string
+}
+
 // ungrinStatements reads grin assignment lines from r and returns them as
 // parsed statements.
 func ungrinStatements(r io.Reader) (statements, error) {
@@ -40,61 +46,10 @@ func ungrinStatements(r io.Reader) (statements, error) {
 
 // ungrinFromStatements converts parsed grin statements back into INI format.
 func ungrinFromStatements(ss statements, w io.Writer) error {
-	type kvPair struct {
-		key   string
-		value string
-	}
-
-	globalKeys := []kvPair{}
-	sections := make(map[string][]kvPair)
-	sectionOrder := []string{}
-	seenSections := make(map[string]bool)
-	emptyOnlySections := make(map[string]bool) // sections that only have {} assignment
-
-	for _, s := range ss {
-		path, value, isObj := extractPathAndValue(s)
-		if path == nil {
-			continue
-		}
-
-		// Skip the root assignment: ini = {};
-		if len(path) == 0 {
-			continue
-		}
-
-		if isObj {
-			// This is a section declaration like ini.section = {};
-			secName := strings.Join(path, ".")
-			if !seenSections[secName] {
-				seenSections[secName] = true
-				sectionOrder = append(sectionOrder, secName)
-				emptyOnlySections[secName] = true
-			}
-			continue
-		}
-
-		if len(path) == 1 {
-			// Global key: ini.key = "value";
-			globalKeys = append(globalKeys, kvPair{key: path[0], value: value})
-		} else {
-			// Section key: ini.section.key = "value";
-			secParts := path[:len(path)-1]
-			secName := strings.Join(secParts, ".")
-			key := path[len(path)-1]
-
-			if !seenSections[secName] {
-				seenSections[secName] = true
-				sectionOrder = append(sectionOrder, secName)
-			}
-			delete(emptyOnlySections, secName)
-
-			sections[secName] = append(sections[secName], kvPair{key: key, value: value})
-		}
-	}
+	globalKeys, sections, sectionOrder, emptyOnlySections := indexStatements(ss)
 
 	first := true
 
-	// Global keys first (no section header)
 	for _, kv := range globalKeys {
 		if _, err := fmt.Fprintf(w, "%s = %s\n", kv.key, kv.value); err != nil {
 			return err
@@ -102,23 +57,17 @@ func ungrinFromStatements(ss statements, w io.Writer) error {
 		first = false
 	}
 
-	// Then sections
 	for _, secName := range sectionOrder {
 		kvs := sections[secName]
-
-		// Skip sections that are just intermediate path objects and have no keys,
-		// unless they were explicitly declared as empty sections
 		if len(kvs) == 0 && !emptyOnlySections[secName] {
 			continue
 		}
-
 		if !first {
 			if _, err := fmt.Fprintln(w); err != nil {
 				return err
 			}
 		}
 		first = false
-
 		if _, err := fmt.Fprintf(w, "[%s]\n", secName); err != nil {
 			return err
 		}
@@ -130,6 +79,52 @@ func ungrinFromStatements(ss statements, w io.Writer) error {
 	}
 
 	return nil
+}
+
+// indexStatements processes parsed statements and returns the data structures
+// needed to reconstruct INI output: global keys, per-section key lists,
+// the original section order, and the set of sections that were declared
+// empty (i.e., only appeared as `section = {};` with no key assignments).
+func indexStatements(ss statements) (
+	globalKeys []ungrinKVPair,
+	sections map[string][]ungrinKVPair,
+	sectionOrder []string,
+	emptyOnlySections map[string]bool,
+) {
+	sections = make(map[string][]ungrinKVPair)
+	seenSections := make(map[string]bool)
+	emptyOnlySections = make(map[string]bool)
+
+	for _, s := range ss {
+		path, value, isObj := extractPathAndValue(s)
+		if len(path) == 0 {
+			continue
+		}
+
+		if isObj {
+			secName := strings.Join(path, ".")
+			if !seenSections[secName] {
+				seenSections[secName] = true
+				sectionOrder = append(sectionOrder, secName)
+				emptyOnlySections[secName] = true
+			}
+			continue
+		}
+
+		if len(path) == 1 {
+			globalKeys = append(globalKeys, ungrinKVPair{key: path[0], value: value})
+		} else {
+			secName := strings.Join(path[:len(path)-1], ".")
+			key := path[len(path)-1]
+			if !seenSections[secName] {
+				seenSections[secName] = true
+				sectionOrder = append(sectionOrder, secName)
+			}
+			delete(emptyOnlySections, secName)
+			sections[secName] = append(sections[secName], ungrinKVPair{key: key, value: value})
+		}
+	}
+	return
 }
 
 // extractPathAndValue extracts the path components and value from a statement.
