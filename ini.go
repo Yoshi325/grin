@@ -8,21 +8,22 @@ import (
 	"unicode/utf8"
 )
 
+// iniKVPair holds a parsed key-value pair from an INI line.
+type iniKVPair struct {
+	key   string
+	value string
+}
+
 // statementsFromINI reads INI data from r and produces a slice of grin
 // statements. The prefix is the root statement (typically just "ini").
 func statementsFromINI(r io.Reader, prefix statement) (statements, error) {
 	scanner := bufio.NewScanner(r)
 
-	type kvPair struct {
-		key   string
-		value string
-	}
-
 	var (
 		currentSection string
 		sectionOrder   []string
-		sectionKeys    = make(map[string][]kvPair)
-		globalKeys     []kvPair
+		sectionKeys    = make(map[string][]iniKVPair)
+		globalKeys     []iniKVPair
 		seenSections   = make(map[string]bool)
 		lineNum        int
 		firstLine      = true
@@ -32,38 +33,21 @@ func statementsFromINI(r io.Reader, prefix statement) (statements, error) {
 		line := scanner.Text()
 		lineNum++
 
-		// Strip UTF-8 BOM from the first line
 		if firstLine {
 			line = stripBOM(line)
 			firstLine = false
 		}
 
 		trimmed := strings.TrimSpace(line)
-
-		// Skip empty lines and comments
 		if trimmed == "" || trimmed[0] == ';' || trimmed[0] == '#' {
 			continue
 		}
 
-		// Section header
 		if trimmed[0] == '[' {
-			end := strings.IndexByte(trimmed, ']')
-			if end == -1 {
-				return nil, fmt.Errorf("line %d: unclosed section header", lineNum)
+			sectionName, err := parseSectionHeader(trimmed, lineNum)
+			if err != nil {
+				return nil, err
 			}
-			sectionName := strings.TrimSpace(trimmed[1:end])
-			if sectionName == "" {
-				return nil, fmt.Errorf("line %d: empty section name", lineNum)
-			}
-
-			// Validate each part of the section name
-			parts := strings.Split(sectionName, ".")
-			for _, p := range parts {
-				if !validIdentifier(p) {
-					return nil, fmt.Errorf("line %d: invalid section name part %q", lineNum, p)
-				}
-			}
-
 			currentSection = sectionName
 			if !seenSections[sectionName] {
 				seenSections[sectionName] = true
@@ -72,26 +56,12 @@ func statementsFromINI(r io.Reader, prefix statement) (statements, error) {
 			continue
 		}
 
-		// Key-value pair: split on first '='
-		eqIdx := strings.IndexByte(trimmed, '=')
-		if eqIdx == -1 {
-			return nil, fmt.Errorf("line %d: expected key = value, got %q", lineNum, trimmed)
+		key, value, err := parseINIKeyValue(trimmed, lineNum)
+		if err != nil {
+			return nil, err
 		}
 
-		key := strings.TrimSpace(trimmed[:eqIdx])
-		value := strings.TrimSpace(trimmed[eqIdx+1:])
-
-		if key == "" {
-			return nil, fmt.Errorf("line %d: empty key", lineNum)
-		}
-		if !validIdentifier(key) {
-			return nil, fmt.Errorf("line %d: invalid key %q", lineNum, key)
-		}
-
-		// Strip surrounding quotes from value
-		value = stripINIQuotes(value)
-
-		pair := kvPair{key: key, value: value}
+		pair := iniKVPair{key: key, value: value}
 		if currentSection == "" {
 			globalKeys = append(globalKeys, pair)
 		} else {
@@ -103,22 +73,21 @@ func statementsFromINI(r io.Reader, prefix statement) (statements, error) {
 		return nil, fmt.Errorf("reading input: %w", err)
 	}
 
-	// Generate statements
-	ss := statements{}
+	return buildINIStatements(prefix, globalKeys, sectionOrder, sectionKeys), nil
+}
 
-	// Root: ini = {};
+// buildINIStatements assembles the final statement slice from the parsed INI
+// data: a root object, global keys, and ordered sections with their keys.
+func buildINIStatements(prefix statement, globalKeys []iniKVPair, sectionOrder []string, sectionKeys map[string][]iniKVPair) statements {
+	ss := statements{}
 	ss = append(ss, prefix.withEmptyObject())
 
-	// Global keys
 	for _, kv := range globalKeys {
 		ss = append(ss, prefix.withBare(kv.key).withStringValue(kv.value))
 	}
 
-	// Track emitted section objects to avoid duplicates
 	emitted := make(map[string]bool)
-
 	for _, secName := range sectionOrder {
-		// Emit intermediate objects for dotted section names
 		parts := strings.Split(secName, ".")
 		for i := 1; i <= len(parts); i++ {
 			partial := strings.Join(parts[:i], ".")
@@ -127,14 +96,49 @@ func statementsFromINI(r io.Reader, prefix statement) (statements, error) {
 				ss = append(ss, prefix.withPath(partial).withEmptyObject())
 			}
 		}
-
-		// Emit key-value pairs
 		for _, kv := range sectionKeys[secName] {
 			ss = append(ss, prefix.withPath(secName).withBare(kv.key).withStringValue(kv.value))
 		}
 	}
 
-	return ss, nil
+	return ss
+}
+
+// parseSectionHeader parses a trimmed section-header line like "[a.b.c]".
+// Returns the section name or an error.
+func parseSectionHeader(trimmed string, lineNum int) (string, error) {
+	end := strings.IndexByte(trimmed, ']')
+	if end == -1 {
+		return "", fmt.Errorf("line %d: unclosed section header", lineNum)
+	}
+	sectionName := strings.TrimSpace(trimmed[1:end])
+	if sectionName == "" {
+		return "", fmt.Errorf("line %d: empty section name", lineNum)
+	}
+	for _, p := range strings.Split(sectionName, ".") {
+		if !validIdentifier(p) {
+			return "", fmt.Errorf("line %d: invalid section name part %q", lineNum, p)
+		}
+	}
+	return sectionName, nil
+}
+
+// parseINIKeyValue parses a trimmed key=value line.
+// Returns (key, stripped-value) or an error.
+func parseINIKeyValue(trimmed string, lineNum int) (string, string, error) {
+	eqIdx := strings.IndexByte(trimmed, '=')
+	if eqIdx == -1 {
+		return "", "", fmt.Errorf("line %d: expected key = value, got %q", lineNum, trimmed)
+	}
+	key := strings.TrimSpace(trimmed[:eqIdx])
+	value := strings.TrimSpace(trimmed[eqIdx+1:])
+	if key == "" {
+		return "", "", fmt.Errorf("line %d: empty key", lineNum)
+	}
+	if !validIdentifier(key) {
+		return "", "", fmt.Errorf("line %d: invalid key %q", lineNum, key)
+	}
+	return key, stripINIQuotes(value), nil
 }
 
 // stripBOM removes a UTF-8 BOM from the beginning of a string if present.
